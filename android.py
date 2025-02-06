@@ -623,4 +623,207 @@ st.write("Biodata using Nested Layout")
             android:text="Email:mramaraj93@gmail.com" />
 </LinearLayout>
 </LinearLayout>""")
+
+st.write("addition of two numbers")
+st.code("""<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="10dp"
+            android:text="Addition of Two Numbers"
+            android:textColor="#FF0000"
+            android:textSize="23dp" />
+
+        <TextView
+            android:id="@+id/No1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="30dp"
+             android:textSize="20dp"
+            android:text="First No" />
+
+        <EditText
+            android:id="@+id/Number1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/No2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:textSize="20dp"
+            
+            android:text="Second No" />
+
+        <EditText
+            android:id="@+id/Number2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="sum" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:text="TextView" />
+
+    </LinearLayout>
+
+</LinearLayout>""")
+
+st.write("JAVA PROGRAM")
+st.code("""
+package com.addition;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.widget.EditText;
+import android.widget.Button;
+import android.widget.TextView;
+import android.view.View;
+
+
+public class AdditionActivity extends Activity {
+	EditText no1;
+	EditText no2;
+	TextView tv;
+	Button calculate;
+	double x=0,y=0,z=0;
+	
+    /** Called when the activity is first created. */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+        initcontrols();
+    }
+    private void initcontrols()
+    {
+    	no1=(EditText)findViewById(R.id.Number1);
+    	no2=(EditText)findViewById(R.id.Number2);
+    	tv=(TextView)findViewById(R.id.textView1);
+    	calculate=(Button)findViewById(R.id.button1);
+    	calculate.setOnClickListener(new Button.OnClickListener()
+    	
+    	{
+    		public void onClick(View v)
+    		{
+    			calculate1();
+    		}});
+    	}
+    	
+    	private void calculate1()
+    	{
+    		x=Double.parseDouble(no1.getText().toString());
+    		y=Double.parseDouble(no2.getText().toString());
+    		z=x+y;
+    		tv.setText(Double.toString(z));
+    		
+    	}
+    	
+    		
+    	    }""")
+
+st.write("Background color change")
+st.code("""
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+
+<LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+<Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+android:text="CYAN" />
+
+<Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+android:text="BLUE" />
+
+<Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+android:text="YELLOW" />
+
+</LinearLayout>
+
+</LinearLayout>""")
+
+st.write("Back.java")
+st.code("""
+package com.color;
+
+
+import android.app.Activity;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
+
+
+publicclass ColorActivity extends Activity {
+	LinearLayout l1;
+	
+/** Called when the activity is first created. */
+@Override
+
+publicvoid onCreate(Bundle savedInstanceState) {
+super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+l1=(LinearLayout)findViewById(R.id.linearLayout1);
+        handleclick hc=new handleclick();
+        findViewById(R.id.button1).setOnClickListener(hc);
+        findViewById(R.id.button2).setOnClickListener(hc);
+        findViewById(R.id.button3).setOnClickListener(hc);
+    }
+publicclass handleclick implements OnClickListener{
+	publicvoid onClick(View args0){
+		if(args0.getId()==R.id.button1)
+		l1.setBackgroundColor(Color.CYAN);
+		elseif(args0.getId()==R.id.button2)
+			l1.setBackgroundColor(Color.BLUE);
+		elseif(args0.getId()==R.id.button3)
+			l1.setBackgroundColor(Color.YELLOW);
+		else
+			l1.setBackgroundColor(Color.TRANSPARENT);
+	}
+    }
+}
+""")
+
               
