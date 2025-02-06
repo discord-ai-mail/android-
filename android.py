@@ -499,7 +499,7 @@ public class MainActivity extends Activity {
 """)
 st.write("color code finding website link:https://colorcodefinder.com/")
 
-st.write("Layout XMl)
+st.write("Layout XMl")
 st.code("""         
 <LinearLayout 
  xmlns:android="http://schemas.android.com/apk/res/android" 
@@ -527,7 +527,7 @@ st.code("""
  android:layout_gravity="center" />
 </FrameLayout> 
 </LinearLayout>"""
-        st.write(Main_activity.java)
+        st.write("Main_activity.java")
         st.code("""package com.example.layouts;
 
 import android.os.Bundle;
