@@ -526,7 +526,7 @@ st.code("""
  android:text="FrameLayout" 
  android:layout_gravity="center" />
 </FrameLayout> 
-</LinearLayout>"""
+</LinearLayout>""")
         st.write("Main_activity.java")
         st.code("""package com.example.layouts;
 
@@ -546,4 +546,81 @@ public class MainActivity extends AppCompatActivity {
 
  }
 
-}"""
+}""")
+
+st.write("Biodata using Nested Layout")
+                st.code("""<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+<TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hello" />
+
+
+<LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+<TextView
+            android:id="@+id/textView1"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="110dp"
+            android:textColor="#ff0000"
+            android:textSize="35dp"
+            android:text="Biodata" />
+
+<TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="110dp"
+            android:textColor="#ff0000"
+            android:textSize="24dp"
+            android:text="Name:RAMRAJ" />
+
+<TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="110dp"
+            android:textColor="#ff0000"
+            android:textSize="24dp"
+            android:text="Age:22" />
+
+<TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="110dp"
+            android:textColor="#ff0000"
+            android:textSize="24dp"
+           android:text="Qualification:M.sc" />
+
+<TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="110dp"
+            android:textColor="#ff0000"
+            android:textSize="24dp"
+            android:text="Phno:9943692214" />
+
+<TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="110dp"
+            android:textColor="#ff0000"
+            android:textSize="24dp"
+            android:text="Email:mramaraj93@gmail.com" />
+</LinearLayout>
+</LinearLayout>""")
+              
