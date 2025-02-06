@@ -527,8 +527,8 @@ st.code("""
  android:layout_gravity="center" />
 </FrameLayout> 
 </LinearLayout>""")
-        st.write("Main_activity.java")
-        st.code("""package com.example.layouts;
+st.write("Main_activity.java")
+st.code("""package com.example.layouts;
 
 import android.os.Bundle;
 
@@ -549,7 +549,7 @@ public class MainActivity extends AppCompatActivity {
 }""")
 
 st.write("Biodata using Nested Layout")
-                st.code("""<?xml version="1.0" encoding="utf-8"?>
+st.code("""<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
