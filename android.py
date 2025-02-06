@@ -498,3 +498,52 @@ public class MainActivity extends Activity {
 }
 """)
 st.write("color code finding website link:https://colorcodefinder.com/")
+
+st.write("Layout XMl)
+st.code("""         
+<LinearLayout 
+ xmlns:android="http://schemas.android.com/apk/res/android" 
+ android:layout_width="match_parent" 
+ android:layout_height="match_parent" 
+ android:orientation="vertical"> 
+ <RelativeLayout 
+ android:layout_width="match_parent" 
+ android:layout_height="200dp" 
+ android:background="#FFC107"> 
+ <TextView 
+ android:layout_width="wrap_content" 
+ android:layout_height="wrap_content" 
+ android:text="RelativeLayout" 
+ android:layout_centerInParent="true" /> 
+ </RelativeLayout> 
+ <FrameLayout 
+ android:layout_width="match_parent" 
+ android:layout_height="200dp" 
+ android:background="#03A9F4"> 
+ <TextView 
+ android:layout_width="wrap_content" 
+ android:layout_height="wrap_content" 
+ android:text="FrameLayout" 
+ android:layout_gravity="center" />
+</FrameLayout> 
+</LinearLayout>"""
+        st.write(Main_activity.java)
+        st.code("""package com.example.layouts;
+
+import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+ @Override
+
+ protected void onCreate(Bundle savedInstanceState) {
+
+ super.onCreate(savedInstanceState);
+
+ setContentView(R.layout.layout1);
+
+ }
+
+}"""
