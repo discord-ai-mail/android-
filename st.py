@@ -518,7 +518,7 @@ android:layout_marginTop="37dp"
 android:ems="10"
 
 android:inputType="textPassword" /></RelativeLayout>""")
-st.write("secondactivity.xml)
+st.write("secondactivity.xml")
 st.code("""<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
 xmlns:tools="http://schemas.android.com/tools"
