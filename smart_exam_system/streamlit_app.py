@@ -3,7 +3,7 @@ import sqlite3
 
 custom_css = """
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Figtree:wght@600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Figtree:wght@700&display=swap');
 
         html, body, [class*="st-"] {
             font-family: 'Figtree', sans-serif;
@@ -12,7 +12,7 @@ custom_css = """
         /* Change font for headers */
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Figtree', sans-serif !important;
-            font-weight: 600 !important;
+            font-weight: 800 !important;
         }
 
         /* Adjust header sizes */
@@ -23,8 +23,7 @@ custom_css = """
 """
 
 # Inject the custom CSS into Streamlit
-st.markdown(custom_css, unsafe_allow_html=True)
-
+st.markdown(custom_css, unsafe_allow_html=True) 
 
 # Initialize Database
 def init_db():
@@ -92,6 +91,11 @@ def authenticate_user(username, password, role):
         return True
     return False
 
+# Logout
+def logout():
+    st.session_state.clear()
+    st.rerun()
+
 # Login Page
 def login():
     st.subheader("🔑 Login")
@@ -105,12 +109,7 @@ def login():
         else:
             st.error("❌ Invalid credentials!")
 
-# Logout
-def logout():
-    st.session_state.clear()
-    st.rerun()
-
-# Dashboard for staff
+# Staff Dashboard
 def staff_dashboard():
     st.sidebar.title("📌 Staff Dashboard")
     menu = st.sidebar.radio("Select an option", ["📌 Add/Edit Questions", "🚪 Logout"])
@@ -140,7 +139,17 @@ def add_questions():
 
     st.write(f"📌 Editing: {course_name} - {class_name}")
 
-    # Form to add new questions
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, question, option1, option2, option3, option4, correct_option FROM question_setter WHERE course_name = ? AND class = ?", (course_name, class_name))
+    questions = cursor.fetchall()
+    conn.close()
+
+    for q in questions:
+        q_id, q_text, op1, op2, op3, op4, correct_option = q
+        st.write(f"**{q_text}**")
+        st.write(f"A) {op1} | B) {op2} | C) {op3} | D) {op4}")
+
     with st.form("add_question_form"):
         question = st.text_area("Enter New Question")
         option1 = st.text_input("Option 1")
@@ -164,6 +173,7 @@ def add_questions():
 def student_dashboard():
     st.sidebar.title("🎓 Student Dashboard")
     menu = st.sidebar.radio("Select an option", ["📝 Take Exam", "🚪 Logout"])
+
     if menu == "📝 Take Exam":
         take_exam()
     elif menu == "🚪 Logout":
@@ -181,9 +191,10 @@ def take_exam():
     conn = sqlite3.connect("database.db")
     cursor = conn.cursor()
 
-    # Fetch available courses
+    # Get available courses
     cursor.execute("SELECT DISTINCT course_name FROM question_setter")
     courses = cursor.fetchall()
+
     if not courses:
         st.warning("No exams available.")
         conn.close()
@@ -191,37 +202,54 @@ def take_exam():
 
     selected_course = st.selectbox("Select Course", [c[0] for c in courses])
 
-    # Fetch questions for the selected course
+    # Get class associated with the selected course
+    cursor.execute("SELECT class FROM courses WHERE course_name = ?", (selected_course,))
+    class_row = cursor.fetchone()
+
+    if not class_row:
+        st.error("❌ Class not found for the selected course!")
+        conn.close()
+        return
+
+    selected_class = class_row[0]
+
+    # Get questions for the selected course
     cursor.execute("SELECT id, question, option1, option2, option3, option4 FROM question_setter WHERE course_name = ?", (selected_course,))
     questions = cursor.fetchall()
     conn.close()
 
-    if not questions:
-        st.warning(f"No questions available for {selected_course}.")
-        return
-
-    # Display questions
     student_answers = {}
     for q in questions:
-        if len(q) != 6:  # Ensuring data integrity
-            st.error(f"Invalid question format: {q}")
-            return
-
         q_id, q_text, a, b, c, d = q
         student_answers[q_id] = st.radio(q_text, [a, b, c, d], key=f"ans_{q_id}")
 
-    # Submit button
     if st.button("Submit Exam"):
-        correct_answers = sum(1 for q_id, answer in student_answers.items() if answer == "correct")
-        total_marks = correct_answers * 5
-        st.success(f"🎉 Exam Submitted! You scored: {total_marks}")
+        correct_answers = 0
+        total_questions = len(questions)
 
+        conn = sqlite3.connect("database.db")
+        cursor = conn.cursor()
+        
+        for q_id, answer in student_answers.items():
+            cursor.execute("SELECT correct_option FROM question_setter WHERE id = ?", (q_id,))
+            correct_option = cursor.fetchone()[0]
+            if answer == correct_option:
+                correct_answers += 1  
 
-# Main function
+        total_marks = correct_answers * 5  
+
+        cursor.execute("INSERT INTO marks (student_id, class, course_id, marks) VALUES (?, ?, ?, ?)", 
+                       (student_id, selected_class, selected_course, total_marks))
+        
+        conn.commit()
+        conn.close()
+
+        st.success(f"🎉 Exam Submitted! You scored: {total_marks} out of {total_questions * 5}")
+
+# Main Function
 def main():
     st.title("🎓 Smart Exam Management System")
-    
-    if "logged_in" not in st.session_state:
+    if "username" not in st.session_state:
         login()
     elif st.session_state["role"] == "staff":
         staff_dashboard()
