@@ -348,3 +348,333 @@ public class LoginSuccessActivity extends AppCompatActivity {
     } 
 }
 """)
+st.header("create page using Intent and one Button and pass the Values")
+st.write("Main Activity Java File")
+st.code("""package com.example.transferofdata;
+import android.os.Bundle;
+import android.app.Activity;
+import android.content.Intent;
+import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+public class MainActivity extends Activity 
+{
+@Override
+protected void onCreate(Bundle savedInstanceState) 
+{
+super.onCreate(savedInstanceState);
+setContentView(R.layout.activity_main);
+final EditText et=(EditText)findViewById(R.id.editText1);
+final EditText et1=(EditText)findViewById(R.id.editText2);
+Button send=(Button)findViewById(R.id.button1);
+send.setOnClickListener(new OnClickListener()
+{
+@Override
+public void onClick(View arg0)
+{
+String s=et.getText().toString();
+String s1=et1.getText().toString();
+Intent it=new Intent(MainActivity.this,Second.class);
+it.putExtra("uname", s);
+it.putExtra("pwd", s1);
+
+startActivity(it);
+
+}
+
+});
+
+}
+
+@Override
+
+public boolean onCreateOptionsMenu(Menu menu) 
+
+{
+
+getMenuInflater().inflate(R.menu.main, menu);
+
+return true;
+
+}
+
+}
+""")
+st.write("SecondActivity.java")
+
+st.code("""package com.example.transferofdata;
+
+import android.os.Bundle;
+
+import android.app.Activity;
+
+import android.view.Menu;
+
+import android.widget.TextView;
+
+public class Second extends Activity 
+
+{
+
+@Override
+
+protected void onCreate(Bundle savedInstanceState) 
+
+{
+
+super.onCreate(savedInstanceState);
+
+setContentView(R.layout.activity_second);
+
+TextView tv=(TextView)findViewById(R.id.textView1);
+
+TextView tv1=(TextView)findViewById(R.id.textView2);
+
+tv.setText(getIntent().getExtras().getString("uname"));
+
+tv1.setText(getIntent().getExtras().getString("pwd"));
+
+}
+
+@Override
+
+public boolean onCreateOptionsMenu(Menu menu) 
+{
+getMenuInflater().inflate(R.menu.second, menu);
+
+return true;
+
+}
+
+}""")
+st.write("main.xml")
+st.code("""<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+xmlns:tools="http://schemas.android.com/tools"
+
+android:layout_width="match_parent"
+
+android:layout_height="match_parent"
+
+android:paddingBottom="@dimen/activity_vertical_margin"
+
+android:paddingLeft="@dimen/activity_horizontal_margin"
+
+android:paddingRight="@dimen/activity_horizontal_margin"
+
+android:paddingTop="@dimen/activity_vertical_margin"
+
+tools:context=".MainActivity" >
+
+<Button
+
+android:id="@+id/button1"
+
+android:layout_width="wrap_content"
+
+android:layout_height="wrap_content"
+
+android:layout_alignParentLeft="true"
+
+android:layout_alignParentTop="true"
+
+android:layout_marginLeft="78dp"
+
+android:layout_marginTop="154dp"
+
+android:text="send" />
+
+<EditText
+
+android:id="@+id/editText1"
+
+android:layout_width="wrap_content"
+
+android:layout_height="wrap_content"
+
+android:layout_alignParentTop="true"
+
+android:layout_alignRight="@+id/button1"
+
+android:layout_marginTop="18dp"
+
+android:ems="10" ><requestFocus /></EditText>
+
+<EditText
+
+android:id="@+id/editText2"
+android:layout_width="wrap_content"
+
+android:layout_height="wrap_content"
+
+android:layout_alignRight="@+id/button1"
+
+android:layout_below="@+id/editText1"
+
+android:layout_marginTop="37dp"
+
+android:ems="10"
+
+android:inputType="textPassword" /></RelativeLayout>""")
+st.write("secondactivity.xml)
+st.code("""<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+xmlns:tools="http://schemas.android.com/tools"
+
+android:layout_width="match_parent"
+
+android:layout_height="match_parent"
+
+android:paddingBottom="@dimen/activity_vertical_margin"
+
+android:paddingLeft="@dimen/activity_horizontal_margin"
+
+android:paddingRight="@dimen/activity_horizontal_margin"
+
+android:paddingTop="@dimen/activity_vertical_margin"
+
+tools:context=".Second" >
+
+<TextView
+
+android:id="@+id/textView1"
+
+android:layout_width="wrap_content"
+
+android:layout_height="wrap_content"
+
+android:layout_alignParentLeft="true"
+
+android:layout_alignParentTop="true"
+
+android:layout_marginLeft="42dp"
+
+android:layout_marginTop="70dp"
+
+android:text="uname" />
+
+<TextView
+
+android:id="@+id/textView2"
+
+android:layout_width="wrap_content"
+
+android:layout_height="wrap_content"
+
+android:layout_alignLeft="@+id/textView1"
+
+android:layout_below="@+id/textView1"
+
+android:layout_marginLeft="15dp"
+ android:layout_marginTop="37dp"
+
+android:text="password" />
+
+</RelativeLayout>""")
+st.header("android application Send SMS using Intent")
+st.write("java")
+st.code("""package com.example.sms;
+
+import android.os.Bundle;
+
+import android.app.Activity;
+
+import android.telephony.gsm.SmsManager;
+
+import android.view.Menu;
+
+import android.view.View;
+
+import android.view.View.OnClickListener;
+
+import android.widget.Button;
+
+public class MainActivity extends Activity 
+
+{
+
+@Override
+
+protected void onCreate(Bundle savedInstanceState
+
+{
+
+super.onCreate(savedInstanceState);
+
+setContentView(R.layout.activity_main);
+
+Button bt=(Button)findViewById(R.id.button1);
+
+bt.setOnClickListener(new OnClickListener() 
+
+{
+
+@Override
+
+public void onClick(View v) 
+{
+
+// TODO Auto-generated method stub
+
+SmsManager sms=SmsManager.getDefault();
+
+sms.sendTextMessage("5554", null, "hai", null, null);
+
+}
+
+});
+
+}
+public boolean onCreateOptionsMenu(Menu menu) 
+
+{
+
+// Inflate the menu; this adds items to the action bar if it is present.
+
+getMenuInflater().inflate(R.menu.main, menu);
+
+return true;
+
+}
+
+}""")
+st.write("xml")
+st.code("""<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+xmlns:tools="http://schemas.android.com/tools"
+
+android:layout_width="match_parent"
+
+android:layout_height="match_parent"
+
+android:paddingBottom="@dimen/activity_vertical_margin"
+
+android:paddingLeft="@dimen/activity_horizontal_margin"
+
+android:paddingRight="@dimen/activity_horizontal_margin"
+
+android:paddingTop="@dimen/activity_vertical_margin"
+
+tools:context=".MainActivity" >
+
+<Button
+
+android:id="@+id/button1"
+
+android:layout_width="wrap_content"
+
+android:layout_height="wrap_content"
+
+android:layout_alignParentLeft="true"
+
+android:layout_alignParentTop="true"
+
+android:layout_marginLeft="54dp"
+
+android:layout_marginTop="166dp"
+
+android:text="send" />
+
+</RelativeLayout>""")
