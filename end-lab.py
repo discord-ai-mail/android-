@@ -678,3 +678,299 @@ android:layout_marginTop="166dp"
 android:text="send" />
 
 </RelativeLayout>""")
+st.header("Background Color change")
+st.write("Xml code")
+st.code("""<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ android:layout_width="fill_parent"
+ android:layout_height="fill_parent"
+ android:orientation="vertical">
+<LinearLayout
+ android:id="@+id/linearLayout1"
+ android:layout_width="match_parent"
+ android:layout_height="match_parent"
+ android:orientation="vertical">
+<Button
+ android:id="@+id/button1"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+android:text="CYAN"/>
+<Button
+ android:id="@+id/button2"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+android:text="BLUE" />
+<Button
+ android:id="@+id/button3"
+ android:layout_width="wrap_content"
+ android:layout_height="wrap_content"
+android:text="YELLOW" />
+</LinearLayout>
+</LinearLayout>
+""")
+st.write("java")
+st.code("""package bgcolor.com;
+import android.app.Activity;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
+import bgcolor.com.R;
+public class BgcolorActivity extends Activity {
+LinearLayout l1;
+
+public void onCreate(Bundle savedInstanceState) {
+super.onCreate(savedInstanceState);
+ setContentView(R.layout.main);
+l1=(LinearLayout)findViewById(R.id.linearLayout1);
+ handleclick hc=new handleclick();
+ findViewById(R.id.button1).setOnClickListener(hc);
+ findViewById(R.id.button2).setOnClickListener(hc);
+ findViewById(R.id.button3).setOnClickListener(hc);
+ }
+public class handleclick implements OnClickListener{
+public void onClick(View args0){
+if(args0.getId()==R.id.button1)
+l1.setBackgroundColor(Color.CYAN);
+else if(args0.getId()==R.id.button2)
+l1.setBackgroundColor(Color.BLUE);
+else if(args0.getId()==R.id.button3)
+l1.setBackgroundColor(Color.YELLOW);
+else
+l1.setBackgroundColor(Color.TRANSPARENT);
+}
+ }
+}
+""")
+st.header("Fond and Color change")
+st.write("xml")
+st.code("""<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:baselineAligned="false"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20sp"
+        android:gravity="center"
+        android:text="WELCOME"
+        android:textSize="20sp" />
+
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20sp"
+        android:gravity="center"
+        android:text="Change fond size" />
+    
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20sp"
+        android:gravity="center"
+        android:text="Change Color" />
+
+</LinearLayout>
+
+""")
+st.write("java")
+st.code("""package com.display;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.graphics.Typeface;
+import android.graphics.Color;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+public class FondAndColorChangeActivity extends Activity {
+	float font=24;
+	int i=1;
+  
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+    
+    final TextView t1=(TextView)findViewById(R.id.textView1);
+    Button b1=(Button)findViewById(R.id.button1);
+    b1.setOnClickListener(new View.OnClickListener(){
+    	public void onClick(View view){
+    		t1.setTextSize(font);
+    		font=font+4;
+    		if(font==40)
+    			font=20;
+    	}
+    });
+    Button b2=(Button)findViewById(R.id.button2);
+    b2.setOnClickListener(new View.OnClickListener() {
+		
+		public void onClick(View view) {
+		switch(i)
+		{
+		case 1:
+			t1.setTextColor(Color.parseColor("#0000FF"));
+			break;
+			
+		case 2:
+			t1.setTextColor(Color.parseColor("#00FF00"));
+			break;
+			
+		case 3:
+			t1.setTextColor(Color.parseColor("#FF0000"));
+			break;
+			
+		case 4:
+			t1.setTextColor(Color.parseColor("#800000"));
+			break;
+		}
+		i++;
+		if(i==5)
+			i=1;
+		}
+	});
+    
+    }
+}
+""")
+st.header("Sjctni Admission")
+st.write("java")
+st.code("""Sjctni.java
+package com.example.sjctnimenu;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
+public class MainActivity extends Activity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        Button homeButton = findViewById(R.id.btnHome);
+        Button coursesButton = findViewById(R.id.btnCourses);
+        Button admissionsButton = findViewById(R.id.btnAdmissions);
+        Button contactButton = findViewById(R.id.btnContact);
+
+        homeButton.setOnClickListener(view -> openPage(HomeActivity.class));
+        coursesButton.setOnClickListener(view -> openPage(CoursesActivity.class));
+        admissionsButton.setOnClickListener(view -> openPage(AdmissionsActivity.class));
+        contactButton.setOnClickListener(view -> openPage(ContactActivity.class));
+    }
+
+    private void openPage(Class<?> activityClass) {
+        Intent intent = new Intent(this, activityClass);
+        startActivity(intent);
+    }
+}
+
+// HomeActivity.java
+package com.example.sjctnimenu;
+
+import android.app.Activity;
+import android.os.Bundle;
+
+public class HomeActivity extends Activity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home);
+    }
+}
+
+// CoursesActivity.java
+package com.example.sjctnimenu;
+
+import android.app.Activity;
+import android.os.Bundle;
+
+public class CoursesActivity extends Activity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_courses);
+    }
+}
+
+// AdmissionsActivity.java
+package com.example.sjctnimenu;
+
+import android.app.Activity;
+import android.os.Bundle;
+
+public class AdmissionsActivity extends Activity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_admissions);
+    }
+}
+
+// ContactActivity.java
+package com.example.sjctnimenu;
+
+import android.app.Activity;
+import android.os.Bundle;
+
+public class ContactActivity extends Activity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_contact);
+    }
+}""")
+st.write("Xml")
+st.code("""Home Page (activity_home.xml)
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome to SJCTNI" />
+</LinearLayout>
+Courses Page (activity_courses.xml)
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Courses Offered: B.Sc, B.A, B.Com, M.Sc, M.A, M.Com" />
+</LinearLayout>
+
+Admissions Page (activity_admissions.xml)
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Admission Open! Apply at sjctni.edu/admissions" />
+</LinearLayout>
+Contact Page (activity_contact.xml)
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Contact: 123-456-7890 | Email: info@sjctni.edu" />
+</LinearLayout>""")
+
