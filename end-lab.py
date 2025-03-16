@@ -1,5 +1,4 @@
 import streamlit as st
-
 custom_css = """
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Figtree:wght@600&display=swap');
@@ -18,6 +17,7 @@ custom_css = """
         h1 { font-size: 36px !important; }
         h2 { font-size: 30px !important; }
         h3 { font-size: 24px !important; }
+
         /* Glow effect for code blocks */
         pre, code {
             background-color: #1E1E1E !important; /* Dark background */
@@ -32,8 +32,12 @@ custom_css = """
         pre:hover, code:hover {
             box-shadow: 0 0 15px rgba(30, 144, 255, 0.8); /* DodgerBlue glow */
         }
+
+        /* Hide Streamlit footer including 'Created by GitHub' */
+        footer {visibility: hidden !important;}
     </style>
 """
+
 # Inject the custom CSS into Streamlit
 st.markdown(custom_css, unsafe_allow_html=True)
 
