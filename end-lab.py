@@ -33,8 +33,12 @@ custom_css = """
             box-shadow: 0 0 15px rgba(30, 144, 255, 0.8); /* DodgerBlue glow */
         }
 
-        /* Hide Streamlit footer including 'Created by GitHub' */
+        /* Hide Streamlit footer */
         footer {visibility: hidden !important;}
+        footer:after {content: ""; display: none !important;}
+        
+        /* Hide Made with Streamlit footer */
+        .viewerBadge_container__1QSob {display: none !important;}
     </style>
 """
 
