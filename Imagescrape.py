@@ -1,60 +1,42 @@
 import streamlit as st
-import os
 import requests
-from serpapi import GoogleSearch
+from bs4 import BeautifulSoup
+import os
+from PIL import Image
+from io import BytesIO
+
+# Function to scrape images from Pinterest
+def scrape_pinterest_images(query, num_images=10):
+    search_url = f"https://www.pinterest.com/search/pins/?q={query.replace(' ', '%20')}"
+    headers = {"User-Agent": "Mozilla/5.0"}
+    
+    response = requests.get(search_url, headers=headers)
+    if response.status_code != 200:
+        return []
+
+    soup = BeautifulSoup(response.text, "html.parser")
+    image_tags = soup.find_all("img", limit=num_images)
+    
+    image_urls = [img["src"] for img in image_tags if "src" in img.attrs]
+    
+    return image_urls
 
 # Streamlit UI
-def main():
-    st.title("Google Image Scraper")
-    
-    # User inputs
-    search_query = st.text_input("Enter search term:")
-    num_images = st.slider("Number of images:", 1, 50, (5))
-    folder_path = st.text_input("Enter folder path to save images:", "downloads/")
-    scrape_button = st.button("Scrape Images")
-    
-    if scrape_button:
-        if not search_query.strip():
-            st.error("Please enter a search term.")
-            return
-        
-        if not os.path.exists(folder_path):
-            os.makedirs(folder_path)
-        
-        st.info("Scraping images... Please wait.")
-        scrape_images(search_query, num_images, folder_path)
+st.title("Pinterest Image Scraper")
 
-# Image Scraper Function
-def scrape_images(query, num_images, folder):
-    params = {
-        "q": query,
-        "tbm": "isch",
-        "api_key": "817b28b53cc1f4911ccda7123cba5359947c36f5e7ae56016706689e86d7b10a"
-    }
-    search = GoogleSearch(params)
-    results = search.get()
-    images = results.get("images_results", [])
-    
-    count = 0
-    for img in images[:num_images]:
-        img_url = img.get("original")
-        if img_url:
-            save_image(img_url, folder, count)
-            count += 1
-    
-    st.success(f"Downloaded {count} images to {folder}")
+query = st.text_input("Enter a search term:", "Travel destinations")
+num_images = st.slider("Number of images", 5, 20, 10)
 
-# Save Image Function
-def save_image(url, folder, index):
-    response = requests.get(url, stream=True)
-    if response.status_code == 200:
-        file_path = os.path.join(folder, f"image_{index}.jpg")
-        with open(file_path, "wb") as file:
-            for chunk in response.iter_content(1024):
-                file.write(chunk)
-        st.image(file_path, caption=f"Downloaded {index+1}")
+if st.button("Scrape Images"):
+    with st.spinner("Scraping images..."):
+        image_urls = scrape_pinterest_images(query, num_images)
+
+    if image_urls:
+        st.success(f"Found {len(image_urls)} images!")
+        for idx, img_url in enumerate(image_urls):
+            response = requests.get(img_url)
+            image = Image.open(BytesIO(response.content))
+            st.image(image, caption=f"Image {idx+1}")
     else:
-        st.warning(f"Failed to download image {index+1}")
+        st.error("No images found!")
 
-if __name__ == "__main__":
-    main()
